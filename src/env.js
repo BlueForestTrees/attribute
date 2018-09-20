@@ -4,7 +4,7 @@ const throwit = message => {throw message}
 
 const ENV = {
     NAME: process.env.NAME || throwit("ENV.NAME pas défini"),
-    PORT: process.env.PORT || 8080,
+    PORT: process.env.PORT || 80,
 
     REST_PATH: process.env.REST_PATH || "rest",
 
