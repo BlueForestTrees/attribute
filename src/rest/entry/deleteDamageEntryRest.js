@@ -6,6 +6,6 @@ const router = Router()
 
 module.exports = router
 
-router.delete('/api/tree/damageEntry', run(() => col(cols.DAMAGE_ENTRY)().deleteMany()))
+router.delete('/api/damageEntry', run(() => col(cols.DAMAGE_ENTRY)().deleteMany()))
 
 

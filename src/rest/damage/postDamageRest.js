@@ -17,7 +17,7 @@ const addDamage = damage => col(cols.DAMAGE).insertOne(damage)
 
 module.exports = router
 
-router.post('/api/tree/damage',
+router.post('/api/damage',
     validBodyId,
     validBodyTrunkId,
     validBodyDamageId,

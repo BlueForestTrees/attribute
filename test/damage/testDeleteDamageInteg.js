@@ -12,7 +12,7 @@ describe('DELETE Damage', function () {
 
     it('delete damage no auth', withTest({
         req: {
-            url: `/api/tree/damage/${bleDamages[0]._id}`,
+            url: `/api/damage/${bleDamages[0]._id}`,
             method: "DELETE"
         },
         res: {
@@ -22,7 +22,7 @@ describe('DELETE Damage', function () {
 
     it('delete damage bad auth', withTest({
         req: {
-            url: `/api/tree/damage/${bleDamages[0]._id}`,
+            url: `/api/damage/${bleDamages[0]._id}`,
             method: "DELETE",
             headers: authSimple
         },
@@ -33,7 +33,7 @@ describe('DELETE Damage', function () {
 
     it('delete damage', withTest({
         req: {
-            url: `/api/tree/damage/${bleDamages[0]._id}`,
+            url: `/api/damage/${bleDamages[0]._id}`,
             method: "DELETE",
             headers: authGod
         },

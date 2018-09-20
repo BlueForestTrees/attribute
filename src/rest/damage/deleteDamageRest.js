@@ -11,7 +11,7 @@ const damages = col(cols.DAMAGE)
 const deleteDamage = configure(() => damages).deleteOne
 module.exports = router
 
-router.delete('/api/tree/damage/:_id',
+router.delete('/api/damage/:_id',
     validPathId,
     validUser,
     validOwner(damages),

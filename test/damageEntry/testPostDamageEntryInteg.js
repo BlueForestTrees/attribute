@@ -17,7 +17,7 @@ describe('POST DamageEntry', function () {
 
     it('post new damage entry', withTest({
         req: {
-            url: `/api/tree/damageEntry`,
+            url: `/api/damageEntry`,
             method: "POST",
             body: damageEntry
         },
@@ -32,7 +32,7 @@ describe('POST DamageEntry', function () {
     it('post existing damage entry', withTest({
         req: {
             method: "POST",
-            url: "/api/tree/damageEntry",
+            url: "/api/damageEntry",
             body: co2eDamageEntry
         }, res: {
             code: 400,
@@ -42,7 +42,7 @@ describe('POST DamageEntry', function () {
 
     it('refuse to create a bad damage entry', withTest({
         req: {
-            url: "/api/tree/damageEntry",
+            url: "/api/damageEntry",
             method: "POST",
             body: badDamageEntry
         },

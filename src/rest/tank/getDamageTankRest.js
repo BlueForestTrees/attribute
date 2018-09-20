@@ -23,7 +23,7 @@ const loadDamage = items =>
 
 const damageEntryService = configure(() => col(cols.DAMAGE_ENTRY))
 
-router.get('/api/tree/damagetank/:trunkId',
+router.get('/api/damageTank/:trunkId',
     validPathTrunkId,
     run(loadTreeNode, "READ NODE"),
     run(nodes => each(nodes, o => o._id = object(o._id))),

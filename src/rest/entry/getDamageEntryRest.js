@@ -11,14 +11,11 @@ module.exports = router
 const damageEntryService = configure(() => col(cols.DAMAGE_ENTRY))
 const searchMixin = {color: 1, name: 1, g: 1}
 
-router.get('/api/tree/damageEntry',
+router.get('/api/damageEntry',
     optionalValidQ,
+    run(o=>{console.log(o);return o}),
     run(({q}) => damageEntryService.search(
         [
             {key: "name", type: "regex", value: q}
         ],0, searchMixin))
-)
-
-router.get('/api/tree/damageEntry/:name',
-    run(damageEntryService.findOne)
 )

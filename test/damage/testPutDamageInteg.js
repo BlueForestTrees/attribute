@@ -12,7 +12,7 @@ describe('PUT Damage', function () {
 
     it('put damage', withTest({
         req: {
-            url: `/api/tree/damage`,
+            url: `/api/damage`,
             method: "PUT",
             body: {...bleDamages[0], bqt: bleDamages[0].bqt * 4},
             headers: authGod
@@ -30,7 +30,7 @@ describe('PUT Damage', function () {
 
     it('put damage no auth', withTest({
         req: {
-            url: `/api/tree/damage`,
+            url: `/api/damage`,
             method: "PUT",
             body: {...bleDamages[0], bqt: bleDamages[0].bqt * 4}
         },
@@ -41,7 +41,7 @@ describe('PUT Damage', function () {
 
     it('put damage bad auth', withTest({
         req: {
-            url: `/api/tree/damage`,
+            url: `/api/damage`,
             method: "PUT",
             body: {...bleDamages[0], bqt: bleDamages[0].bqt * 4},
             headers: authSimple

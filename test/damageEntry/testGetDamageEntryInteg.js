@@ -8,9 +8,10 @@ describe('GET Damages entries', function () {
 
     beforeEach(init(api, ENV, cols))
 
-    it('search damage entry', withTest({
+    it(
+        'search damage entry', withTest({
         req: {
-            url: "/api/tree/damageEntry?q=IP"
+            url: "/api/damageEntry?q=IP"
         },
         res: {
             body: [

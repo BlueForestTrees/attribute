@@ -1,6 +1,6 @@
 {
   "name": "damage",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "les dommages environnementaux ADEME des produits.",
   "main": "dist/index.js",
   "repository": "https://github.com/BlueForestTrees/damage.git",

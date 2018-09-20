@@ -11,7 +11,7 @@ const router = Router()
 
 module.exports = router
 
-router.post('/api/tree/damageEntry',
+router.post('/api/damageEntry',
     validId,
     validBodyName,
     validBodyG,

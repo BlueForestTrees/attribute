@@ -11,7 +11,7 @@ module.exports = router
 const damageService = configure(() => col(cols.DAMAGE))
 const damageEntryService = configure(() => col(cols.DAMAGE_ENTRY))
 
-router.get('/api/tree/damage/:trunkId',
+router.get('/api/damage/:trunkId',
     validPathTrunkId,
     run(({trunkId}) => ({trunkId})),
     run(damageService.findMixin({trunkId: 0})),

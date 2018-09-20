@@ -11,7 +11,7 @@ describe('GET Damages', function () {
 
     it('get damages', withTest({
         req: {
-            url: `/api/tree/damage/${bleTrunk._id}`
+            url: `/api/damage/${bleTrunk._id}`
         },
         res: {
             bodypath: [
@@ -30,7 +30,7 @@ describe('GET Damages', function () {
 
     it('empty damages', withTest({
         req: {
-            url: `/api/tree/damage/${farineTrunk._id}`
+            url: `/api/damage/${farineTrunk._id}`
         },
         res: {
             body: []

@@ -11,7 +11,7 @@ const damageService = configure(() => damages)
 
 module.exports = router
 
-router.put('/api/tree/damage',
+router.put('/api/damage',
     validBodyId,
     validBodyTrunkId,
     validBodyDamageId,

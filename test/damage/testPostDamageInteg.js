@@ -18,7 +18,7 @@ describe('POST Damage', function () {
 
     let postDamageReq = damage => ({
         req: {
-            url: `/api/tree/damage`,
+            url: `/api/damage`,
             method: "POST",
             body: damage,
             headers: authGod
@@ -30,7 +30,7 @@ describe('POST Damage', function () {
 
     it('post damage no auth', withTest({
         req: {
-            url: `/api/tree/damage`,
+            url: `/api/damage`,
             method: "POST",
             body: damage
         },
@@ -41,7 +41,7 @@ describe('POST Damage', function () {
 
     it('post damage bad auth', withTest({
         req: {
-            url: `/api/tree/damage`,
+            url: `/api/damage`,
             method: "POST",
             body: damage,
             headers: authSimple
