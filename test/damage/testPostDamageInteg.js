@@ -55,7 +55,7 @@ describe('POST Damage', function () {
         ...postDamageReq(damage),
         db: {
             expected: {
-                colname: cols.DAMAGE,
+                colname: cols.ATTRIBUTE,
                 doc: {...damage, oid:god._id}
             }
         }
@@ -68,10 +68,10 @@ describe('POST Damage', function () {
             db: {
                 expected: {
                     list: [{
-                        colname: cols.DAMAGE,
+                        colname: cols.ATTRIBUTE,
                         doc: {...damage, oid:god._id}
                     }, {
-                        colname: cols.DAMAGE,
+                        colname: cols.ATTRIBUTE,
                         doc: {...damage2, oid:god._id}
                     }]
                 }

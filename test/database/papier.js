@@ -10,6 +10,6 @@ const coucheAdhesifDamages = [{_id: object("a11111111111111111111120"), trunkId:
 const coucheAluDamages = [{_id: object("a11111111111111111111121"), trunkId: object("666666666666666666666666"), damageId: co2eDamageEntry._id, bqt: 1000}]
 
 export const database = {
-    [cols.DAMAGE]: [...couchePEDamages, ...couchePapierDamages, ...coucheAdhesifDamages, ...coucheAluDamages]
+    [cols.ATTRIBUTE]: [...couchePEDamages, ...couchePapierDamages, ...coucheAdhesifDamages, ...coucheAluDamages]
 }
 

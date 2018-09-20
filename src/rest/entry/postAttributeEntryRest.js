@@ -1,12 +1,8 @@
-import {validBodyColor, validBodyG, validId, validBodyName} from "../../validations"
-import {run} from 'express-blueforest'
-import {Router} from "express-blueforest"
-import {cols} from "../../collections"
+import {Router,run} from 'express-blueforest'
 import {col} from "mongo-registry"
-import configure from "items-service"
+import {cols} from "../../collections"
+import {validBodyColor, validBodyG, validId, validBodyName} from "../../validations"
 import ENV from "../../env"
-
-const insertAttributeEntry = configure(() => col(cols.ATTRIBUTE_ENTRY)).insertOne
 
 const router = Router()
 
@@ -17,5 +13,5 @@ router.post(`/api/${ENV.NAME}Entry`,
     validBodyName,
     validBodyG,
     validBodyColor,
-    run(insertAttributeEntry)
+    run(facetEntry => col(cols.ATTRIBUTE_ENTRY).insertOne(facetEntry))
 )

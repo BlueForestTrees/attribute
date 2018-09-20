@@ -19,5 +19,5 @@ const bDamages = [
 ]
 
 export const database = {
-    [cols.DAMAGE]: [...aDamages, ...bDamages]
+    [cols.ATTRIBUTE]: [...aDamages, ...bDamages]
 }

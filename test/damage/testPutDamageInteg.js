@@ -22,7 +22,7 @@ describe('PUT Damage', function () {
         },
         db: {
             expected: {
-                colname: cols.DAMAGE,
+                colname: cols.ATTRIBUTE,
                 doc: {...bleDamages[0], bqt: bleDamages[0].bqt * 4}
             }
         }

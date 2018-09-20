@@ -42,7 +42,7 @@ describe('DELETE Damage', function () {
         },
         db: {
             expected: {
-                colname: cols.DAMAGE,
+                colname: cols.ATTRIBUTE,
                 missingDoc: {
                     _id: bleDamages[0]._id
                 }

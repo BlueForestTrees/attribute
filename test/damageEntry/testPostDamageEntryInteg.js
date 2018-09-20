@@ -23,7 +23,7 @@ describe('POST DamageEntry', function () {
         },
         db: {
             expected: {
-                colname: cols.DAMAGE_ENTRY,
+                colname: cols.ATTRIBUTE_ENTRY,
                 doc: damageEntry
             }
         }
@@ -57,7 +57,7 @@ describe('POST DamageEntry', function () {
         },
         db: {
             expected: {
-                colname: cols.DAMAGE_ENTRY,
+                colname: cols.ATTRIBUTE_ENTRY,
                 missingDoc: badDamageEntry
             }
         }

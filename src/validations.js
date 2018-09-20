@@ -20,6 +20,23 @@ const G = 'g'
 const BQT = 'bqt'
 const grandeursKeys = ["PNOF", "PDF", "DALY", "CTUh", "CTUe", "Ene1", "Ene2", "Dens", "Nomb", "Volu", "Duré", "Mass", "Surf", "Long", "Pri1", "Pri2", "Tran"]
 
+
+export const optionalValidG = grandeur(check("g").optional())
+const defaultPS = 20
+export const optionnalPageSize = [
+    (req, res, next) => {
+        if (isNil(req.params.ps)) {
+            req.params.ps = defaultPS
+        }
+        next()
+    },
+    check("ps").isInt({
+        min: 1,
+        max: 200
+    }).withMessage(`must be an integer between 1 and 200 (default to ${defaultPS})`).toInt()
+]
+export const optionalMongoId = field => mongoId(check(field).optional())
+export const optionnalAfterIdx = optionalMongoId("aidx")
 export const validUser = run((o, req) => {
     let token = jwt.decode(req.headers[X_ACCESS_TOKEN])
     if (!token || !token.user) {

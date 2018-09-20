@@ -12,5 +12,5 @@ export const co2eDamageEntry = withEntry("5a6a03c03e77667641d2d2c9", "équivalen
 vitBDamageEntry.eq = "CO2"
 
 export const database = {
-    [cols.DAMAGE_ENTRY]: [vitDDamageEntry, vitEDamageEntry, co2eDamageEntry, vitCDamageEntry, vitBDamageEntry, prixDamageEntry]
+    [cols.ATTRIBUTE_ENTRY]: [vitDDamageEntry, vitEDamageEntry, co2eDamageEntry, vitCDamageEntry, vitBDamageEntry, prixDamageEntry]
 }

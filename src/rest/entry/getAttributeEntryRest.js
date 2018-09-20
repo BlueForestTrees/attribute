@@ -1,6 +1,6 @@
 import {run} from 'express-blueforest'
 import {Router} from "express-blueforest"
-import {optionalValidQ} from "../../validations"
+import {optionalValidG, optionalValidQ, optionnalAfterIdx, optionnalPageSize} from "../../validations"
 import {cols} from "../../collections"
 import configure from "items-service"
 import {col} from "mongo-registry"
@@ -14,9 +14,13 @@ const searchMixin = {color: 1, name: 1, g: 1}
 
 router.get(`/api/${ENV.NAME}Entry`,
     optionalValidQ,
-    run(o=>{console.log(o);return o}),
-    run(({q}) => attributeEntryService.search(
+    optionalValidG,
+    optionnalPageSize,
+    optionnalAfterIdx,
+    run(({q, g, aidx, ps}) => attributeEntryService.search(
         [
-            {key: "name", type: "regex", value: q}
-        ],0, searchMixin))
+            {key: "name", type: "regex", value: q},
+            {key: "quantity.g", value: g},
+            {key: "_id", type: "gt", value: aidx}
+        ], ps, searchMixin))
 )

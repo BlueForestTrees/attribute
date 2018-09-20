@@ -15,7 +15,6 @@ import {
 } from "../../validations"
 
 const router = Router()
-const addAttribute = attribute => col(cols.ATTRIBUTE).insertOne(attribute)
 
 module.exports = router
 
@@ -27,5 +26,5 @@ router.post(`/api/${ENV.NAME}`,
     validUser,
     run(setUserIdIn("oid")),
     run(validTrunkOwner),
-    run(addAttribute)
+    run(facet => col(cols.ATTRIBUTE).insertOne(facet))
 )
