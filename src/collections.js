@@ -1,3 +1,4 @@
 export const cols = {
-    XXX:"XXX"
+    DAMAGE:"DamageCollection",
+    DAMAGE_ENTRY:"DamageEntryCollection"
 }

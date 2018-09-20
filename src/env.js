@@ -1,7 +1,8 @@
-const debug = require('debug')('api:XXX')
+const debug = require('debug')('api:damage')
 import {version} from './../package.json'
 
 const ENV = {
+    NAME: "damage",
     PORT: process.env.PORT || 8080,
     
     REST_PATH: process.env.REST_PATH || "rest",
@@ -11,12 +12,17 @@ const ENV = {
     DB_PORT: process.env.DB_PORT || 27017,
     DB_USER: process.env.DB_USER || "doudou",
     DB_PWD: process.env.DB_PWD || "masta",
-    DB_COLLECTION: process.env.DB_COLLECTION || "XXX",
-    
+
     NODE_ENV: process.env.NODE_ENV || null,
     VERSION: version,
     MORGAN: process.env.MORGAN || ':status :method :url :response-time ms - :res[content-length]',
 }
+
+ENV.TREE_BASE_URL = {
+    "production": process.env.TREE_BASE_URL || "http://tree:8080",
+    "test": "http://localhost:9999",
+    "development": "http://localhost:8080"
+}[ENV.NODE_ENV]
 
 debug({ENV})
 
