@@ -1,11 +1,12 @@
 import {run} from 'express-blueforest'
 import {Router} from "express-blueforest"
 import {cols} from "../../collections"
+import ENV from "./../../env"
 
 const router = Router()
 
 module.exports = router
 
-router.delete('/api/damageEntry', run(() => col(cols.DAMAGE_ENTRY)().deleteMany()))
+router.delete(`/api/${ENV.NAME}Entry`, run(() => col(cols.ATTRIBUTE_ENTRY)().deleteMany()))
 
 

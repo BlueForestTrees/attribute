@@ -16,27 +16,27 @@ module.exports = router
 
 const loadTreeNode = ({trunkId}) => client.get(`${ENV.TREE_BASE_URL}/api/tree/nodes/${trunkId}`, {json: true})
 
-const loadDamage = items =>
-    col(cols.DAMAGE)
+const loadAttribute = items =>
+    col(cols.ATTRIBUTE)
         .find({trunkId: {$in: map(items, i => i._id)}}).toArray()
         .then(dbItems => each(dbItems, dbItem => dbItem.bqt *= find(items, {_id: dbItem.trunkId}).bqt))
 
-const damageEntryService = configure(() => col(cols.DAMAGE_ENTRY))
+const attributeEntryService = configure(() => col(cols.ATTRIBUTE_ENTRY))
 
-router.get('/api/damageTank/:trunkId',
+router.get(`/api/${ENV.NAME}Tank/:trunkId`,
     validPathTrunkId,
     run(loadTreeNode, "READ NODE"),
     run(nodes => each(nodes, o => o._id = object(o._id))),
-    run(loadDamage, "READ DAMAGE"),
-    run(mergeListBy("damageId"), "MERGE ITEMS"),
-    run(damageEntryService.append(
-        "damageId",
+    run(loadAttribute, `READ ${ENV.NAME}`),
+    run(mergeListBy(`${ENV.NAME}Id`), `MERGE ${ENV.NAME}`),
+    run(attributeEntryService.append(
+        `${ENV.NAME}Id`,
         {name: 1, color: 1, g: 1},
-        (damage, damageEntry) => ({
-            _id: damage.damageId,
-            name: damageEntry.name,
-            color: damageEntry.color,
-            quantity: {bqt: damage.bqt, g: damageEntry.g, eq: damageEntry.eq}
+        (attribute, attributeEntry) => ({
+            _id: attribute[`${ENV.NAME}Id`],
+            name: attributeEntry.name,
+            color: attributeEntry.color,
+            quantity: {bqt: attribute.bqt, g: attributeEntry.g, eq: attributeEntry.eq}
         })
     ))
 )

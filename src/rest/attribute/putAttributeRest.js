@@ -1,23 +1,24 @@
-import {validBodyBqt, validBodyId, validBodyDamageId, validBodyTrunkId, validOwner, validUser} from "../../validations"
+import {validBodyBqt, validBodyId, validBodyAttributeId, validBodyTrunkId, validOwner, validUser} from "../../validations"
 import {run} from 'express-blueforest'
 import {Router} from "express-blueforest"
 import {cols} from "../../collections"
 import {col} from "mongo-registry"
 import configure from "items-service"
+import ENV from "./../../env"
 
 const router = Router()
-const damages = col(cols.DAMAGE)
-const damageService = configure(() => damages)
+const attributes = col(cols.ATTRIBUTE)
+const attributeService = configure(() => attributes)
 
 module.exports = router
 
-router.put('/api/damage',
+router.put(`/api/${ENV.NAME}`,
     validBodyId,
     validBodyTrunkId,
-    validBodyDamageId,
+    validBodyAttributeId,
     validBodyBqt,
     validUser,
-    validOwner(damages),
+    validOwner(attributes),
     run(({_id, trunkId, facetId, bqt}) => ({filter: {_id, trunkId, facetId}, item: {bqt}})),
-    run(damageService.filteredUpdate)
+    run(attributeService.filteredUpdate)
 )

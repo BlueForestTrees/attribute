@@ -2,28 +2,30 @@ import {run} from 'express-blueforest'
 import {Router} from "express-blueforest"
 import {cols} from "../../collections"
 import {col} from "mongo-registry"
+import ENV from "./../../env"
+
 import {
     setUserIdIn,
     validBodyBqt,
     validBodyId,
-    validBodyDamageId,
+    validBodyAttributeId,
     validBodyTrunkId,
     validUser,
     validTrunkOwner
 } from "../../validations"
 
 const router = Router()
-const addDamage = damage => col(cols.DAMAGE).insertOne(damage)
+const addAttribute = attribute => col(cols.ATTRIBUTE).insertOne(attribute)
 
 module.exports = router
 
-router.post('/api/damage',
+router.post(`/api/${ENV.NAME}`,
     validBodyId,
     validBodyTrunkId,
-    validBodyDamageId,
+    validBodyAttributeId,
     validBodyBqt,
     validUser,
     run(setUserIdIn("oid")),
     run(validTrunkOwner),
-    run(addDamage)
+    run(addAttribute)
 )

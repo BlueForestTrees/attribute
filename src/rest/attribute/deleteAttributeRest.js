@@ -1,19 +1,20 @@
 import {cols} from "../../collections"
 import {col} from "mongo-registry"
 import configure from "items-service"
+import ENV from "./../../env"
 
 import {run, Router} from 'express-blueforest'
 import {validOwner, validPathId, validUser} from "../../validations"
 
 const router = Router()
 
-const damages = col(cols.DAMAGE)
-const deleteDamage = configure(() => damages).deleteOne
+const attributes = col(cols.ATTRIBUTE)
+const deleteAttribute = configure(() => attributes).deleteOne
 module.exports = router
 
-router.delete('/api/damage/:_id',
+router.delete(`/api/${ENV.NAME}/:_id`,
     validPathId,
     validUser,
-    validOwner(damages),
-    run(deleteDamage)
+    validOwner(attributes),
+    run(deleteAttribute)
 )

@@ -1,12 +1,13 @@
-const debug = require('debug')('api:damage')
 import {version} from './../package.json'
 
+const throwit = message => {throw message}
+
 const ENV = {
-    NAME: "damage",
+    NAME: process.env.NAME || throwit("ENV.NAME pas défini"),
     PORT: process.env.PORT || 8080,
-    
+
     REST_PATH: process.env.REST_PATH || "rest",
-    
+
     DB_NAME: process.env.DB_NAME || "BlueForestTreesDB",
     DB_HOST: process.env.DB_HOST || "localhost",
     DB_PORT: process.env.DB_PORT || 27017,
@@ -23,6 +24,8 @@ ENV.TREE_BASE_URL = {
     "test": "http://localhost:9999",
     "development": "http://localhost:8080"
 }[ENV.NODE_ENV]
+
+const debug = require('debug')(`api:${ENV.NAME}`)
 
 debug({ENV})
 

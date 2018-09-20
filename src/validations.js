@@ -6,14 +6,14 @@ import {run} from 'express-blueforest'
 import client from "request-promise-native"
 import ENV from "./env"
 
-const debug = require('debug')('api:damage:validation')
+const debug = require('debug')(`api:${ENV.NAME}:validation`)
 const grandeur = chain => chain.isIn(grandeursKeys).withMessage("should be Mass, Dens, Long, Tran...")
 const mongoId = chain => chain.exists().withMessage("missing").isMongoId().withMessage("invalid mongo id").customSanitizer(objectNoEx)
 const number = chain => chain.isNumeric().withMessage("must be a valid number")
 
 const ID = '_id'
 const TRUNKID = 'trunkId'
-const DAMAGEID = 'damageId'
+const ATTRIBUTEID = `${ENV.NAME}Id`
 const NAME = 'name'
 const COLOR = 'color'
 const G = 'g'
@@ -59,7 +59,7 @@ export const validMongoId = field => mongoId(check(field))
 export const validId = validMongoId(ID)
 export const validBodyId = mongoId(body(ID))
 export const validBodyTrunkId = mongoId(body(TRUNKID))
-export const validBodyDamageId = mongoId(body(DAMAGEID))
+export const validBodyAttributeId = mongoId(body(ATTRIBUTEID))
 
 
 export const validBodyName = body(NAME).isLength({min: 2}).matches(/^.+/)
@@ -69,5 +69,7 @@ export const optionalValidQ = check('q').optional().exists()
 export const validPathId = mongoId(param(ID))
 export const validPathTrunkId = mongoId(param(TRUNKID))
 
-const throwBf403 = () => {throw {code: "bf403"}}
+const throwBf403 = () => {
+    throw {code: "bf403"}
+}
 export const validTrunkOwner = async o => await client.get(`${ENV.TREE_BASE_URL}/api/tree/${o.trunkId}/owner/${o.oid}`, {json: true}) ? o : throwBf403()

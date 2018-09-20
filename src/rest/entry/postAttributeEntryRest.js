@@ -4,17 +4,18 @@ import {Router} from "express-blueforest"
 import {cols} from "../../collections"
 import {col} from "mongo-registry"
 import configure from "items-service"
+import ENV from "../../env"
 
-const insertDamageEntry = configure(() => col(cols.DAMAGE_ENTRY)).insertOne
+const insertAttributeEntry = configure(() => col(cols.ATTRIBUTE_ENTRY)).insertOne
 
 const router = Router()
 
 module.exports = router
 
-router.post('/api/damageEntry',
+router.post(`/api/${ENV.NAME}Entry`,
     validId,
     validBodyName,
     validBodyG,
     validBodyColor,
-    run(insertDamageEntry)
+    run(insertAttributeEntry)
 )
