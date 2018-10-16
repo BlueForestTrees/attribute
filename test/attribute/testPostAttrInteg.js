@@ -9,28 +9,31 @@ import {oneResponse} from "test-api-express-mongo"
 import {createObjectId} from "test-api-express-mongo"
 import {authGod, authSimple, god} from "../database/users"
 
-describe('POST Damage', function () {
+describe('POST Attr', function () {
 
     beforeEach(init(api, ENV, cols))
 
-    const damage = {_id: createObjectId(), trunkId: farineTrunk._id, damageId: prixDamageEntry._id, bqt: 4}
-    const damage2 = {_id: createObjectId(), trunkId: farineTrunk._id, damageId: prixDamageEntry._id, bqt: 4}
+    const damage = {_id: createObjectId(), trunkId: farineTrunk._id, entryId: prixDamageEntry._id, bqt: 4}
+    const damage2 = {_id: createObjectId(), trunkId: farineTrunk._id, entryId: prixDamageEntry._id, bqt: 4}
 
-    let postDamageReq = damage => ({
+    let postAttReq = damage => ({
         req: {
-            url: `/api/damage`,
+            url: `/api/${ENV.NAME}`,
             method: "POST",
             body: damage,
             headers: authGod
         },
         res: {
-            body: oneResponse
+            bodypath: [
+                {path: "$.ok", value: 1},
+                {path: "$.upserted.length", value: 1}
+            ]
         }
     })
 
-    it('post damage no auth', withTest({
+    it('post attr no auth', withTest({
         req: {
-            url: `/api/damage`,
+            url: `/api/${ENV.NAME}`,
             method: "POST",
             body: damage
         },
@@ -39,9 +42,9 @@ describe('POST Damage', function () {
         }
     }))
 
-    it('post damage bad auth', withTest({
+    it('post attr bad auth', withTest({
         req: {
-            url: `/api/damage`,
+            url: `/api/${ENV.NAME}`,
             method: "POST",
             body: damage,
             headers: authSimple
@@ -51,29 +54,24 @@ describe('POST Damage', function () {
         }
     }))
 
-    it('post damage', withTest({
-        ...postDamageReq(damage),
+    it(`post attr`, withTest({
+        ...postAttReq(damage),
         db: {
             expected: {
-                colname: cols.ATTRIBUTE,
-                doc: {...damage, oid:god._id}
+                colname: cols.TRUNK,
+                doc: {_id: damage.trunkId, [ENV.NAME]: [{...damage, oid: god._id}]}
             }
         }
     }))
 
-    it('post two damages', withTest([
-        postDamageReq(damage),
-        postDamageReq(damage2),
+    it('post two attr', withTest([
+        {req: postAttReq(damage).req},
+        {req: postAttReq(damage2).req},
         {
             db: {
                 expected: {
-                    list: [{
-                        colname: cols.ATTRIBUTE,
-                        doc: {...damage, oid:god._id}
-                    }, {
-                        colname: cols.ATTRIBUTE,
-                        doc: {...damage2, oid:god._id}
-                    }]
+                    colname: cols.TRUNK,
+                    doc: {_id: damage.trunkId, [ENV.NAME]: [{...damage, oid: god._id}, {...damage2, oid: god._id}]}
                 }
             }
         }

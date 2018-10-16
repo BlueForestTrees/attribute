@@ -5,21 +5,21 @@ import {cols} from "../../src/collections"
 import {bleDamages, bleTrunk, farineTrunk} from "../database/gateau"
 import {vitBDamageEntry, vitCDamageEntry} from "../database/damageEntries"
 
-describe('GET Damages', function () {
+describe('GET attr', function () {
 
     beforeEach(init(api, ENV, cols))
 
-    it('get damages', withTest({
+    it('get attr', withTest({
         req: {
-            url: `/api/damage/${bleTrunk._id}`
+            url: `/api/${ENV.NAME}/${bleTrunk._id}`
         },
         res: {
             bodypath: [
                 {path: "$[0]._id", value: bleDamages[0]._id},
-                {path: "$[0].damageId", value: bleDamages[0].damageId},
+                {path: "$[0].entryId", value: bleDamages[0].entryId},
                 {path: "$[0].color", value: vitCDamageEntry.color},
                 {path: "$[1]._id", value: bleDamages[1]._id},
-                {path: "$[1].damageId", value: bleDamages[1].damageId},
+                {path: "$[1].entryId", value: bleDamages[1].entryId},
                 {path: "$[1].name", value: vitBDamageEntry.name},
                 {path: "$[1].quantity.bqt", value: 0.15},
                 {path: "$[1].quantity.g", value: vitBDamageEntry.g},
@@ -30,7 +30,7 @@ describe('GET Damages', function () {
 
     it('empty damages', withTest({
         req: {
-            url: `/api/damage/${farineTrunk._id}`
+            url: `/api/${ENV.NAME}/${farineTrunk._id}`
         },
         res: {
             body: []

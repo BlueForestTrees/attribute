@@ -1,24 +1,25 @@
-import {validBodyBqt, validBodyId, validBodyAttributeId, validBodyTrunkId, validOwner, validUser} from "../../validations"
+import {validBodyBqt, validBodyId, validBodyEntryId, validBodyTrunkId, validOwner, validUser} from "../../validations"
 import {run} from 'express-blueforest'
 import {Router} from "express-blueforest"
 import {cols} from "../../collections"
 import {col} from "mongo-registry"
-import configure from "items-service"
 import ENV from "./../../env"
 
 const router = Router()
-const attributes = col(cols.ATTRIBUTE)
-const attributeService = configure(() => attributes)
+const trunks = col(cols.TRUNK)
 
 module.exports = router
 
 router.put(`/api/${ENV.NAME}`,
-    validBodyId,
     validBodyTrunkId,
-    validBodyAttributeId,
+    validBodyId,
+    validBodyEntryId,
     validBodyBqt,
     validUser,
-    validOwner(attributes),
-    run(({_id, trunkId, facetId, bqt}) => ({filter: {_id, trunkId, facetId}, item: {bqt}})),
-    run(attributeService.filteredUpdate)
+    validOwner(trunks, "trunkId"),
+    run(({trunkId, _id, entryId, bqt}) => trunks.updateOne(
+        {_id: trunkId, [`${ENV.NAME}._id`]: _id},
+        {$set: {[`${ENV.NAME}.$.bqt`]: bqt}})
+    ),
+    run(({result}) => result)
 )

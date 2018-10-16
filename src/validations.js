@@ -5,6 +5,7 @@ import {X_ACCESS_TOKEN} from "./headers"
 import {run} from 'express-blueforest'
 import client from "request-promise-native"
 import ENV from "./env"
+import {isNil} from "lodash"
 
 const debug = require('debug')(`api:${ENV.NAME}:validation`)
 const grandeur = chain => chain.isIn(grandeursKeys).withMessage("should be Mass, Dens, Long, Tran...")
@@ -13,11 +14,12 @@ const number = chain => chain.isNumeric().withMessage("must be a valid number")
 
 const ID = '_id'
 const TRUNKID = 'trunkId'
-const ATTRIBUTEID = `${ENV.NAME}Id`
+const ENTRYID = `entryId`
 const NAME = 'name'
 const COLOR = 'color'
 const G = 'g'
 const BQT = 'bqt'
+const ATTID = "attId"
 const grandeursKeys = ["PNOF", "PDF", "DALY", "CTUh", "CTUe", "Ene1", "Ene2", "Dens", "Nomb", "Volu", "Duré", "Mass", "Surf", "Long", "Pri1", "Pri2", "Tran"]
 
 
@@ -57,7 +59,10 @@ export const validOwner = (col, field = "_id") => run(async (o, req) => {
     let filter = {_id: o[field]}
     const doc = await col.findOne(filter)
     if (doc) {
-        if (req.user._id.equals(doc.oid)) {
+        if (req.user.rights === "G") {
+            debug("valid god")
+            return o
+        } else if (req.user._id.equals(doc.oid)) {
             debug("valid owner user %o, doc %o", req.user._id, doc._id)
             return o
         } else {
@@ -65,7 +70,7 @@ export const validOwner = (col, field = "_id") => run(async (o, req) => {
             throw {code: "bf403"}
         }
     } else {
-        debug("doc not found user %o, doc %o", req.user._id, doc._id)
+        debug("doc not found, filter %o, user %o", filter, req.user._id)
         throw {code: "bf404"}
     }
 })
@@ -76,7 +81,7 @@ export const validMongoId = field => mongoId(check(field))
 export const validId = validMongoId(ID)
 export const validBodyId = mongoId(body(ID))
 export const validBodyTrunkId = mongoId(body(TRUNKID))
-export const validBodyAttributeId = mongoId(body(ATTRIBUTEID))
+export const validBodyEntryId = mongoId(body(ENTRYID))
 
 
 export const validBodyName = body(NAME).isLength({min: 2}).matches(/^.+/)
@@ -84,6 +89,8 @@ export const validBodyColor = body(COLOR).isLength({min: 2}).matches(/^#([A-Fa-f
 export const optionalValidQ = check('q').optional().exists()
 
 export const validPathId = mongoId(param(ID))
+export const validPathBqt = number(param(BQT))
+export const validPathAttributeId = mongoId(param(ATTID))
 export const validPathTrunkId = mongoId(param(TRUNKID))
 
 const throwBf403 = () => {

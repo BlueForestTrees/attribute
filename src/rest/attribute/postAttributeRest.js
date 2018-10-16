@@ -8,7 +8,7 @@ import {
     setUserIdIn,
     validBodyBqt,
     validBodyId,
-    validBodyAttributeId,
+    validBodyEntryId,
     validBodyTrunkId,
     validUser,
     validTrunkOwner
@@ -21,10 +21,11 @@ module.exports = router
 router.post(`/api/${ENV.NAME}`,
     validBodyId,
     validBodyTrunkId,
-    validBodyAttributeId,
+    validBodyEntryId,
     validBodyBqt,
     validUser,
     run(setUserIdIn("oid")),
     run(validTrunkOwner),
-    run(facet => col(cols.ATTRIBUTE).insertOne(facet))
+    run(attr => col(cols.TRUNK).updateOne({_id: attr.trunkId}, {$push: {[ENV.NAME]: attr}}, {upsert: true})),
+    run(({result}) => result)
 )

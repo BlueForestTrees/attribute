@@ -11,13 +11,13 @@ import {withError} from "test-api-express-mongo"
 const badDamageEntry = {_id: createStringObjectId() + "984"}
 const damageEntry = {_id: createObjectId(),name: "nomNewDamageEntry",g: "Dens",color: "#FFFFFF"}
 
-describe('POST DamageEntry', function () {
+describe('POST AttrEntry', function () {
 
     beforeEach(init(api, ENV, cols))
 
-    it('post new damage entry', withTest({
+    it('post new attr entry', withTest({
         req: {
-            url: `/api/damageEntry`,
+            url: `/api/${ENV.NAME}Entry`,
             method: "POST",
             body: damageEntry
         },
@@ -29,10 +29,10 @@ describe('POST DamageEntry', function () {
         }
     }))
 
-    it('post existing damage entry', withTest({
+    it('post existing attr entry', withTest({
         req: {
             method: "POST",
-            url: "/api/damageEntry",
+            url: `/api/${ENV.NAME}Entry`,
             body: co2eDamageEntry
         }, res: {
             code: 400,
@@ -40,9 +40,9 @@ describe('POST DamageEntry', function () {
         }
     }))
 
-    it('refuse to create a bad damage entry', withTest({
+    it('refuse to create a bad attr entry', withTest({
         req: {
-            url: "/api/damageEntry",
+            url: `/api/${ENV.NAME}Entry`,
             method: "POST",
             body: badDamageEntry
         },

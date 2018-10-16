@@ -4,14 +4,14 @@ import ENV from "../../src/env"
 import {cols} from "../../src/collections"
 import {prixDamageEntry} from "../database/damageEntries"
 
-describe('GET Damages entries', function () {
+describe('GET Attr entries', function () {
 
     beforeEach(init(api, ENV, cols))
 
     it(
-        'search damage entry', withTest({
+        'search attr entry', withTest({
         req: {
-            url: "/api/damageEntry?q=IP"
+            url: `/api/${ENV.NAME}Entry?q=IP`
         },
         res: {
             body: [

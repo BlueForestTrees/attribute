@@ -1,6 +1,6 @@
 {
   "name": "attribut",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "description": "les attributs des items",
   "main": "dist/index.js",
   "repository": "https://github.com/BlueForestTrees/attribute.git",
@@ -12,7 +12,7 @@
     "damage": "node --version && cross-env NODE_ENV=development NAME=damage DEBUG=api:* PORT=8090 REST_PATH=src/rest nodemon src/index.js --exec babel-node",
     "impact": "node --version && cross-env NODE_ENV=development NAME=impact DEBUG=api:* PORT=8088 REST_PATH=src/rest nodemon src/index.js --exec babel-node",
     "facet": "node --version && cross-env NODE_ENV=development NAME=facet DEBUG=api:* PORT=8086 REST_PATH=src/rest nodemon src/index.js --exec babel-node",
-    "test": "cross-env DEBUG=api:*,test:* NAME=damage NODE_ENV=test PORT=9019 REST_PATH=src/rest mocha --recursive --require babel-register --exit \"test/**/*.js\""
+    "test": "cross-env DEBUG=api:*,test:* NAME=attTest NODE_ENV=test PORT=9019 REST_PATH=src/rest mocha --recursive --require babel-register --exit \"test/**/*.js\""
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
@@ -30,7 +30,7 @@
     "mocha": "5.0.0",
     "nodemon": "1.17.3",
     "rimraf": "2.6.2",
-    "test-api-express-mongo": "1.0.13"
+    "test-api-express-mongo": "1.0.19"
   },
   "dependencies": {
     "cross-env": "5.2.0",

@@ -1,6 +1,8 @@
 import {version} from './../package.json'
 
-const throwit = message => {throw message}
+const throwit = message => {
+    throw message
+}
 
 const ENV = {
     NAME: process.env.NAME || throwit("ENV.NAME pas défini"),
@@ -24,6 +26,11 @@ ENV.TREE_BASE_URL = {
     "test": "http://localhost:9999",
     "development": "http://localhost:8080"
 }[ENV.NODE_ENV]
+
+
+if (ENV.NODE_ENV !== 'production') {
+    ENV.DB_NAME = `${ENV.NODE_ENV}-${ENV.DB_NAME}`
+}
 
 const debug = require('debug')(`api:${ENV.NAME}`)
 

@@ -1,6 +1,6 @@
 import ENV from "./env"
 
 export const cols = {
-    ATTRIBUTE: `${ENV.NAME}Collection`,
+    TRUNK: `TrunkCollection`,
     ATTRIBUTE_ENTRY: `${ENV.NAME}EntryCollection`
 }

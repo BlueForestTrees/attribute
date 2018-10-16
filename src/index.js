@@ -1,6 +1,7 @@
 import ENV from "./env"
 import {dbInit} from "mongo-registry"
 import startExpress from "express-blueforest"
+import {registry} from "./dbRegistry"
 
 const errorMapper = err => {
     if (err.code === 11000) {
@@ -18,6 +19,6 @@ const errorMapper = err => {
     }
 }
 
-export default dbInit(ENV, [])
+export default dbInit(ENV, registry)
     .then(startExpress(ENV, errorMapper))
     .catch(e => console.error("BOOT ERROR\n",e))
