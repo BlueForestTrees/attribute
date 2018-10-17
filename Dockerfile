@@ -8,6 +8,7 @@ WORKDIR /build
 RUN npm install
 RUN npm run build
 
+
 FROM node:latest
 COPY --from=api-builder /build/package.json ./
 COPY --from=api-builder /build/dist/js ./
