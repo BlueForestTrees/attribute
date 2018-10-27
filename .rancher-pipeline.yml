@@ -1,0 +1,10 @@
+stages:
+- name: build
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: blueforest/attribut:1.0.3
+      pushRemote: true
+      registry: index.docker.io
+timeout: 60
