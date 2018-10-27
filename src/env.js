@@ -23,7 +23,7 @@ const ENV = {
 ENV.TREE_BASE_URL = {
     "production": process.env.TREE_BASE_URL || "http://tree",
     "test": "http://localhost:9999",
-    "development": "http://localhost"
+    "development": "http://localhost:8080"
 }[ENV.NODE_ENV]
 
 const debug = require('debug')(`api:${ENV.NAME}`)

@@ -1,9 +1,10 @@
-import {validPathTrunkId} from "../../validations"
+import {validPathAttributeId, validPathBqt, validPathTrunkId} from "../../validations"
 import {Router, run} from 'express-blueforest'
 import {cols} from "../../collections"
 import {col} from "mongo-registry"
 import configure from "items-service"
 import ENV from "./../../env"
+import {map} from "lodash"
 
 
 const router = Router()
@@ -20,9 +21,33 @@ router.get(`/api/${ENV.NAME}/:trunkId`,
         {name: 1, color: 1, g: 1},
         (attribute, attributeEntry) => ({
             _id: attribute._id,
+            [`${ENV.NAME}Id`]: attributeEntry._id,
             name: attributeEntry.name,
             color: attributeEntry.color,
             quantity: {bqt: attribute.bqt, g: attributeEntry.g, eq: attributeEntry.eq}
         })
     ))
+)
+
+/**
+ * Donne la liste des trunk ID qui porte cet attribut, et la bqt de trunk pour correspondre à la bqt de attr.
+ */
+router.get(`/api/${ENV.NAME}/equiv/:bqt/:attrId`,
+    validPathBqt,
+    validPathAttributeId,
+    run(({bqt, attrId}, req, res) => {
+        res.locals.bqt = bqt
+
+        return col(cols.ATTRIBUTE)
+            .aggregate(
+                [
+                    {$match: {[`${ENV.NAME}Id`]: attrId}},
+                    {$sample: {size: 15}}
+                ]
+            ).toArray()
+    }),
+    run((attributes, req, res) => map(attributes, attr => ({
+        _id: attr.trunkId,
+        bqt: res.locals.bqt / attr.bqt
+    })))
 )

@@ -84,7 +84,9 @@ export const validBodyColor = body(COLOR).isLength({min: 2}).matches(/^#([A-Fa-f
 export const optionalValidQ = check('q').optional().exists()
 
 export const validPathId = mongoId(param(ID))
+export const validPathBqt = number(param(BQT))
 export const validPathTrunkId = mongoId(param(TRUNKID))
+export const validPathAttributeId = mongoId(param("attrId"))
 
 const throwBf403 = () => {
     throw {code: "bf403"}
