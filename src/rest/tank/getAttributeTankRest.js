@@ -34,6 +34,7 @@ router.get(`/api/${ENV.NAME}Tank/:trunkId`,
         {name: 1, color: 1, g: 1},
         (attribute, attributeEntry) => ({
             _id: attribute[`${ENV.NAME}Id`],
+            [`${ENV.NAME}Id`]: attributeEntry._id,
             name: attributeEntry.name,
             color: attributeEntry.color,
             quantity: {bqt: attribute.bqt, g: attributeEntry.g, eq: attributeEntry.eq}
