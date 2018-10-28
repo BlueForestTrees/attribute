@@ -38,16 +38,18 @@ router.get(`/api/${ENV.NAME}/equiv/:bqt/:attrId`,
     run(({bqt, attrId}, req, res) => {
         res.locals.bqt = bqt
 
+        const bqtFilter = bqt === 0 ? {bqt: 0} : {}
+
         return col(cols.ATTRIBUTE)
             .aggregate(
                 [
-                    {$match: {[`${ENV.NAME}Id`]: attrId}},
+                    {$match: {[`${ENV.NAME}Id`]: attrId, ...bqtFilter}},
                     {$sample: {size: 15}}
                 ]
             ).toArray()
     }),
     run((attributes, req, res) => map(attributes, attr => ({
         _id: attr.trunkId,
-        bqt: res.locals.bqt / attr.bqt
+        bqt: (res.locals.bqt / attr.bqt) || 0
     })))
 )
