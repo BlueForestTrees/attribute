@@ -38,7 +38,7 @@ router.get(`/api/${ENV.NAME}/equiv/:bqt/:attrId`,
     run(({bqt, attrId}, req, res) => {
         res.locals.bqt = bqt
 
-        const bqtFilter = bqt === 0 ? {bqt: 0} : {}
+        const bqtFilter = bqt === 0 ? {bqt: 0} : {bqt: {$ne: 0}}
 
         return col(cols.ATTRIBUTE)
             .aggregate(
