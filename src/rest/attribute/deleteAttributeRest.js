@@ -14,5 +14,5 @@ router.delete(`/api/${ENV.NAME}/:_id`,
     validPathId,
     validUser,
     validOwner(attributes),
-    run(({_id}) => attributes().deleteOne({_id}))
+    run(({_id}) => attributes.deleteOne({_id}))
 )

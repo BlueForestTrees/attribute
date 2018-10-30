@@ -5,6 +5,7 @@ import {X_ACCESS_TOKEN} from "./headers"
 import {run} from 'express-blueforest'
 import client from "request-promise-native"
 import ENV from "./env"
+import {isNil} from "lodash"
 
 const debug = require('debug')(`api:${ENV.NAME}:validation`)
 const grandeur = chain => chain.isIn(grandeursKeys).withMessage("should be Mass, Dens, Long, Tran...")
