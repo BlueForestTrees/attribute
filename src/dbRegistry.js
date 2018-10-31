@@ -1,7 +1,7 @@
 import {col} from "mongo-registry"
 import {cols} from "./collections"
 
-export const registry = [
+export default [
     {
         version: "1.0.4",
         log: "externId idx",
