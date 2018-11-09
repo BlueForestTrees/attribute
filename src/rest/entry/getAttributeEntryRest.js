@@ -5,6 +5,7 @@ import {cols} from "../../collections"
 import configure from "items-service"
 import {col} from "mongo-registry"
 import ENV from "./../../env"
+import {forEach} from "lodash"
 
 const router = Router()
 module.exports = router
@@ -22,5 +23,6 @@ router.get(`/api/${ENV.NAME}Entry`,
             {key: "name", type: "regex", value: q},
             {key: "quantity.g", value: g},
             {key: "_id", type: "gt", value: aidx}
-        ], ps, searchMixin))
+        ], ps, searchMixin)),
+    run(res => forEach(res, r => r.type = ENV.NAME))
 )
