@@ -5,7 +5,7 @@ import {run} from 'express-blueforest'
 import {Router} from "express-blueforest"
 import {cols} from "../../collections"
 import {mergeListBy} from "../../calculation"
-import {map, each, find} from "lodash"
+import {map, each, find, forEach} from "lodash"
 import {object} from "mongo-registry"
 import ENV from "../../env"
 import client from "request-promise-native"
@@ -37,7 +37,8 @@ router.get(`/api/${ENV.NAME}Tank/:trunkId`,
             [`${ENV.NAME}Id`]: attributeEntry._id,
             name: attributeEntry.name,
             color: attributeEntry.color,
-            quantity: {bqt: attribute.bqt, g: attributeEntry.g, eq: attributeEntry.eq}
+            quantity: {bqt: attribute.bqt, g: attributeEntry.g, eq: attributeEntry.eq},
+            type: ENV.NAME
         })
     ))
 )

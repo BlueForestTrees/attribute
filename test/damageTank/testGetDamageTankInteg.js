@@ -13,7 +13,7 @@ describe('GET DamageTank', function () {
     
     it('damage tank papier A', withTest({
             req: {
-                url: `/api/damageTank/${papierVA._id}`
+                url: `/api/${ENV.NAME}Tank/${papierVA._id}`
             },
             res: {
                 bodypath: [
@@ -28,7 +28,7 @@ describe('GET DamageTank', function () {
     
     it('damage tank gateau', withTest({
         req: {
-            url: `/api/damageTank/${gateauTrunk._id}`,
+            url: `/api/${ENV.NAME}Tank/${gateauTrunk._id}`,
         },
         res: {
             bodypath: [

@@ -24,7 +24,8 @@ router.get(`/api/${ENV.NAME}/:trunkId`,
             [`${ENV.NAME}Id`]: attributeEntry._id,
             name: attributeEntry.name,
             color: attributeEntry.color,
-            quantity: {bqt: attribute.bqt, g: attributeEntry.g, eq: attributeEntry.eq}
+            quantity: {bqt: attribute.bqt, g: attributeEntry.g, eq: attributeEntry.eq},
+            type: ENV.NAME
         })
     ))
 )
