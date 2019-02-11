@@ -1,6 +1,6 @@
 {
   "name": "attribut",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "les attributs des items",
   "main": "dist/index.js",
   "repository": "https://github.com/BlueForestTrees/attribute.git",

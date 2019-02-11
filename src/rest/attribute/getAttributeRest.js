@@ -1,4 +1,4 @@
-import {validPathAttributeId, validPathBqt, validPathTrunkId} from "../../validations"
+import {validLimit, validPathAttributeId, validPathBqt, validPathTrunkId} from "../../validations"
 import {Router, run} from 'express-blueforest'
 import {cols} from "../../collections"
 import {col} from "mongo-registry"
@@ -33,19 +33,23 @@ router.get(`/api/${ENV.NAME}/:trunkId`,
 /**
  * Donne la liste des trunk ID qui porte cet attribut, et la bqt de trunk pour correspondre à la bqt de attr.
  */
-router.get(`/api/${ENV.NAME}/equiv/:bqt/:attrId`,
+router.get(`/api/${ENV.NAME}/equiv/:bqt/:attrId/:limit`,
     validPathBqt,
     validPathAttributeId,
-    run(({bqt, attrId}, req, res) => {
+    validLimit,
+    run(({bqt, attrId, limit}, req, res) => {
         res.locals.bqt = bqt
-
-        const bqtFilter = bqt === 0 ? {bqt: 0} : {bqt: {$ne: 0}}
 
         return col(cols.ATTRIBUTE)
             .aggregate(
                 [
-                    {$match: {[`${ENV.NAME}Id`]: attrId, ...bqtFilter}},
-                    {$sample: {size: 15}}
+                    {
+                        $match: {
+                            [`${ENV.NAME}Id`]: attrId,
+                            bqt :  bqt === 0 ? 0 : {$ne: 0}
+                        }
+                    },
+                    {$sample: {size: limit}}
                 ]
             ).toArray()
     }),

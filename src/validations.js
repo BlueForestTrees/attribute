@@ -84,6 +84,7 @@ export const validBodyName = body(NAME).isLength({min: 2}).matches(/^.+/)
 export const validBodyColor = body(COLOR).isLength({min: 2}).matches(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/)
 export const optionalValidQ = check('q').optional().exists()
 
+export const validLimit = number(param("limit")).isLength({min: 1, max: 15})
 export const validPathId = mongoId(param(ID))
 export const validPathBqt = number(param(BQT))
 export const validPathTrunkId = mongoId(param(TRUNKID))
