@@ -38,10 +38,10 @@ router.get(`/api/${ENV.NAME}/equiv/:bqt/:attrId/:limit`,
     validPathAttributeId,
     validLimit,
     validOptionalTrunkId,
-    run(({bqt, attrId, trunkId, limit}, req, res) => {
+    run(({bqt, attrId, tid, limit}, req, res) => {
         res.locals.bqt = bqt
 
-        const trunkIdFilter = trunkId ? {trunkId} : {}
+        const trunkIdFilter = tid ? {trunkId: tid} : {}
 
         return col(cols.ATTRIBUTE)
             .aggregate(
