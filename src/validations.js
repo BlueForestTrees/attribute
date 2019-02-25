@@ -95,7 +95,7 @@ const throwBf403 = () => {
     throw {code: "bf403"}
 }
 export const validTrunkOwner = async (o, req) => (
-    req.user.rights.charAt(0) === 'G'
+    req.user.rights && req.user.rights.charAt(0) === 'G'
     ||
     await client.get(`${ENV.TREE_BASE_URL}/api/tree/${o.trunkId}/owner/${o.oid}`, {json: true})
 ) ? o : throwBf403()
