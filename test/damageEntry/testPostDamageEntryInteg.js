@@ -36,7 +36,7 @@ describe('POST DamageEntry', function () {
             body: co2eDamageEntry
         }, res: {
             code: 400,
-            body: withError(1,"allready exists")
+            body: withError(1,"L'élément existe déjà")
         }
     }))
 

@@ -6,7 +6,7 @@ import dbRegistry from "./dbRegistry"
 const errorMapper = err => {
     if (err.code === 11000) {
         err.status = 400
-        err.body = {errorCode: 1, message: "allready exists"}
+        err.body = {errorCode: 1, message: "L'élément existe déjà"}
     } else if (err.code === 'bf403') {
         err.status = 403
         err.body = {errorCode: 3, message: "Réservé au propriétaire ou au super-utilisateur."}
