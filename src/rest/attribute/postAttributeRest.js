@@ -1,8 +1,7 @@
-import {run} from 'express-blueforest'
-import {Router} from "express-blueforest"
-import {cols} from "../../collections"
+import {run, Router} from 'express-blueforest'
 import {col} from "mongo-registry"
 import ENV from "./../../env"
+import {createSender} from "simple-rbmq"
 
 import {
     setUserIdIn,
@@ -26,5 +25,5 @@ router.post(`/api/${ENV.NAME}`,
     validUser,
     run(setUserIdIn("oid")),
     run(validTrunkOwner),
-    run(facet => col(cols.ATTRIBUTE).insertOne(facet))
+    run(createSender(ENV.RB.exchange, `${ENV.NAME}-upsert`), "send message")
 )

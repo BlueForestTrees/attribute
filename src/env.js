@@ -1,4 +1,5 @@
 import {version} from './../package.json'
+import fs from 'fs'
 
 const throwit = message => {throw message}
 
@@ -18,6 +19,8 @@ const ENV = {
     NODE_ENV: process.env.NODE_ENV || null,
     VERSION: version,
     MORGAN: process.env.MORGAN || ':status :method :url :response-time ms - :res[content-length]',
+
+    RB_PATH: process.env.RB_PATH || "mq.json"
 }
 
 ENV.TREE_BASE_URL = {
@@ -25,6 +28,8 @@ ENV.TREE_BASE_URL = {
     "test": "http://localhost:9999",
     "development": "http://localhost:8080"
 }[ENV.NODE_ENV]
+
+ENV.RB = JSON.parse(fs.readFileSync(ENV.RB_PATH, 'utf8'))
 
 const debug = require('debug')(`api:${ENV.NAME}`)
 

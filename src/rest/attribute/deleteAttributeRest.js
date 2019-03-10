@@ -1,9 +1,9 @@
 import {cols} from "../../collections"
 import {col} from "mongo-registry"
 import ENV from "./../../env"
-
 import {run, Router} from 'express-blueforest'
 import {validOwner, validPathId, validUser} from "../../validations"
+import {createSender} from "simple-rbmq"
 
 const router = Router()
 module.exports = router
@@ -14,5 +14,7 @@ router.delete(`/api/${ENV.NAME}/:_id`,
     validPathId,
     validUser,
     validOwner(attributes),
-    run(({_id}) => attributes.deleteOne({_id}))
+    run(createSender(ENV.RB.exchange, `${ENV.NAME}-delete`))
 )
+
+module.exports = router
