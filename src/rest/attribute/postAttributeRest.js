@@ -23,7 +23,7 @@ router.post(`/api/${ENV.NAME}`,
     validBodyAttributeId,
     validBodyBqt,
     validUser,
-    run(setUserIdIn("oid")),
     run(validTrunkOwner),
+    run(setUserIdIn("oid")),
     run(createSender(ENV.RB.exchange, `${ENV.NAME}-upsert`), "send message")
 )

@@ -7,7 +7,10 @@ import client from "request-promise-native"
 import ENV from "./env"
 import {isNil} from "lodash"
 
-const debug = require('debug')(`api:${ENV.NAME}:validation`)
+const throwit = ex => {
+    throw ex
+}
+const debug = require('debug')(`api:${ENV.NAME}`)
 const grandeur = chain => chain.isIn(grandeursKeys).withMessage("should be Mass, Dens, Long, Tran...")
 const mongoId = chain => chain.exists().withMessage("missing").isMongoId().withMessage("invalid mongo id").customSanitizer(objectNoEx)
 const number = chain => chain.exists().custom(v => !isNaN(Number.parseFloat(v))).withMessage("must be a valid number").customSanitizer(Number.parseFloat)
@@ -40,12 +43,12 @@ export const optionalMongoId = field => mongoId(check(field).optional())
 export const optionnalAfterIdx = optionalMongoId("aidx")
 export const validUser = run((o, req) => {
     let token = jwt.decode(req.headers[X_ACCESS_TOKEN])
-    if (!token || !token.user) {
-        throw {code: "bf401"}
-    }
+
+    !token || !token.user && throwit({code: "bf401"})
+
     req.user = token.user
     req.user._id = object(req.user._id)
-    debug("user %o", req.user)
+
     return o
 })
 
@@ -55,21 +58,35 @@ export const setUserIdIn = field => (o, req) => {
 }
 
 export const validOwner = (col, field = "_id") => run(async (o, req) => {
-    let filter = {_id: o[field]}
-    const doc = await col.findOne(filter)
-    if (doc) {
-        if (req.user._id.equals(doc.oid)) {
-            debug("valid owner user %o, doc %o", req.user._id, doc._id)
-            return o
-        } else {
-            debug("invalid owner user %o, doc %o", req.user._id, doc._id)
-            throw {code: "bf403"}
-        }
-    } else {
-        debug("doc not found user %o, doc %o", req.user._id, doc._id)
-        throw {code: "bf404"}
-    }
+    const doc = await col.findOne({_id: o[field]})
+    const validOwner =
+        (!doc && "no doc")
+        ||
+        (req.user._id.equals(doc.oid) && "owner")
+        ||
+        (req.user.rights && req.user.rights.charAt(0) === 'G' && "god")
+
+    debug('{validOwner:{_id:"%s", oid:"%s", validity:"%s"}}', o[field], req.user._id, validOwner)
+
+    validOwner || throwit({code: "bf403"})
+
+    return o
 })
+
+export const validTrunkOwner = async (o, req) => {
+
+    let validTrunkOwner = req.user.rights && req.user.rights.charAt(0) === 'G' && "god"
+
+    try {
+        validTrunkOwner = await client.get(`${ENV.TREE_BASE_URL}/api/tree/${o.trunkId}/owner/${req.user._id}`, {json: true}) && "owner"
+    } catch (err) {
+        validTrunkOwner = err.statusCode === 404 && "no doc" || throwit(err)
+    }
+
+    debug('{validTrunkOwner:{_id:"%s", oid:"%s", validity:"%s"}}', o.trunkId, req.user._id, validTrunkOwner)
+
+    return (validTrunkOwner && o) || throwit({code: "bf403"})
+}
 
 export const validBodyG = grandeur(body(G))
 export const validBodyBqt = number(body(BQT))
@@ -90,12 +107,3 @@ export const validPathBqt = number(param(BQT))
 export const validPathTrunkId = mongoId(param(TRUNKID))
 export const validOptionalTrunkId = mongoId(check("tid")).optional()
 export const validPathAttributeId = mongoId(param("attrId"))
-
-const throwBf403 = () => {
-    throw {code: "bf403"}
-}
-export const validTrunkOwner = async (o, req) => (
-    req.user.rights && req.user.rights.charAt(0) === 'G'
-    ||
-    await client.get(`${ENV.TREE_BASE_URL}/api/tree/${o.trunkId}/owner/${o.oid}`, {json: true})
-) ? o : throwBf403()
