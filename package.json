@@ -1,6 +1,6 @@
 {
   "name": "attribut",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "les attributs des items",
   "main": "dist/index.js",
   "repository": "https://github.com/BlueForestTrees/attribute.git",
@@ -42,7 +42,7 @@
     "mongo-registry": "1.0.15",
     "request": "2.88.0",
     "request-promise-native": "1.0.5",
-    "simple-rbmq": "1.0.23"
+    "simple-rbmq": "2.0.2"
   },
   "babel": {
     "presets": [
