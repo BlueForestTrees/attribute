@@ -22,7 +22,7 @@ const NAME = 'name'
 const COLOR = 'color'
 const G = 'g'
 const BQT = 'bqt'
-const grandeursKeys = ["PNOF", "PDF", "DALY", "CTUh", "CTUe", "Ene1", "Ene2", "Dens", "Nomb", "Volu", "Duré", "Mass", "Surf", "Long", "Pri1", "Pri2", "Tran"]
+const grandeursKeys = ["NO", "D", "AL", "TU", "Ene1", "Ene2", "Dens", "Nomb", "Volu", "Duré", "Mass", "Surf", "Long", "Pri1", "Pri2", "Tran"]
 
 
 export const optionalValidG = grandeur(check("g").optional())
