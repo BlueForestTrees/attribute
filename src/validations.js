@@ -105,5 +105,7 @@ export const validLimit = number(param("limit")).isLength({min: 1, max: 15})
 export const validPathId = mongoId(param(ID))
 export const validPathBqt = number(param(BQT))
 export const validPathTrunkId = mongoId(param(TRUNKID))
+export const validEntryId = mongoId(param(ATTRIBUTEID))
+
 export const validOptionalTrunkId = mongoId(check("tid")).optional()
 export const validPathAttributeId = mongoId(param("attrId"))

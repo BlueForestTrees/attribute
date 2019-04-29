@@ -1,6 +1,6 @@
 {
   "name": "attribut",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "description": "les attributs des items",
   "main": "dist/index.js",
   "repository": "https://github.com/BlueForestTrees/attribute.git",
@@ -9,6 +9,7 @@
   "scripts": {
     "start": "node index.js",
     "build": "rimraf dist && babel src --out-dir dist && copyfiles etc/** dist",
+    "impactTank": "node --version && cross-env NODE_ENV=development NAME=impactTank DEBUG=api:* PORT=8088 REST_PATH=src/rest nodemon src/index.js --exec babel-node",
     "impact": "node --version && cross-env NODE_ENV=development NAME=impact DEBUG=api:* PORT=8088 REST_PATH=src/rest nodemon src/index.js --exec babel-node",
     "facet": "node --version && cross-env NODE_ENV=development NAME=facet DEBUG=api:* PORT=8086 REST_PATH=src/rest nodemon src/index.js --exec babel-node",
     "test": "cross-env DEBUG=api:*,test:* NAME=damage NODE_ENV=test PORT=9019 REST_PATH=src/rest mocha --recursive --require babel-register --exit \"test/**/*.js\""
