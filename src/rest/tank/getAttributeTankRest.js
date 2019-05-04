@@ -12,7 +12,7 @@ const attributeEntryService = configure(() => col(cols.ATTRIBUTE_ENTRY))
 
 router.get(`/api/${ENV.NAME}Tank/:trunkId`,
     validPathTrunkId,
-    run(({trunkId}) => col(cols.ATTRIBUTE_TANK).find({trunkId}, {projection: {impactId: 1, bqt: 1}}).toArray()),
+    run(({trunkId}) => col(cols.ATTRIBUTE_TANK).find({trunkId, bqt: {$ne: null}}, {projection: {impactId: 1, bqt: 1}}).toArray()),
     run(attributeEntryService.append(
         `${ENV.NAME}Id`,
         {name: 1, color: 1, g: 1},
