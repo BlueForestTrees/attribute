@@ -10,7 +10,7 @@ export default [
     },
     {
         version: "1.1.8",
-        log: `facet (trunkId,${ENV.NAME}Id) idx`,
+        log: `${ENV.NAME} (trunkId,${ENV.NAME}Id) idx`,
         script: () => col(cols.ATTRIBUTE).createIndex({"trunkId": 1, [ENV.NAME + "Id"]: 1})
     }
 ]
